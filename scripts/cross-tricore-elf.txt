@@ -1,0 +1,17 @@
+[binaries]
+c = ['tricore-elf-gcc', '-nostdlib']
+cpp = ['tricore-elf-g++', '-nostdlib']
+ar = 'tricore-elf-ar'
+as = 'tricore-elf-as'
+strip = 'tricore-elf-strip'
+nm = 'tricore-elf-nm'
+
+[host_machine]
+system = 'none'
+cpu_family = 'tricore'
+cpu = 'tricore'
+endian = 'little'
+
+[properties]
+skip_sanity_check = true
+librt = '-lgcc'
