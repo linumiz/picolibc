@@ -14,6 +14,10 @@ warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 _BEGIN_STD_C
 
+#if defined(__tricore__)
+#define _JBLEN 15
+#endif
+
 #if defined(__HEXAGON_ARCH__)
 /*
  * r16 -  r31
