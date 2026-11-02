@@ -48,6 +48,10 @@ main(void)
     printf("no denorms on rx, skipping\n");
     return 77;
 #endif
+#ifdef __tricore__
+    printf("no float denorms on tricore, skipping\n");
+    return 77;
+#endif
     int ret = 0;
 
     /* Fix proposed in https://github.com/llvm/llvm-project/pull/185245 */

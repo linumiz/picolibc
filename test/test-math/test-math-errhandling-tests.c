@@ -505,11 +505,13 @@ makemathname(test_erf_neginf)(void)
 {
     return makemathname(erf)(-makemathname(infval));
 }
+#if !defined(__tricore__) || !defined(TEST_FLOAT)
 static FLOAT_T
 makemathname(test_erf_small)(void)
 {
     return makemathname(erf)(makemathname(small));
 }
+#endif
 
 static FLOAT_T
 makemathname(test_exp_qnan)(void)
@@ -4053,11 +4055,13 @@ makemathname(test_log1p_small)(void)
 {
     return makemathname(log1p)(makemathname(small));
 }
+#if !defined(__tricore__) || !defined(TEST_FLOAT)
 static FLOAT_T
 makemathname(test_atan2_small)(void)
 {
     return makemathname(atan2)((FLOAT_T)4.0 * makemathname(small), makemathname(two));
 }
+#endif
 static FLOAT_T
 makemathname(test_exp_subnormal)(void)
 {
@@ -4191,8 +4195,11 @@ TEST_CONST struct {
     TEST(erf_neg0, -(FLOAT_T)0, 0, 0),
     TEST(erf_inf, (FLOAT_T)1.0, 0, 0),
     TEST(erf_neginf, -(FLOAT_T)1.0, 0, 0),
+#if !defined(__tricore__) || !defined(TEST_FLOAT)
+    /* TriCore flushes float subnormal results to zero */
     TEST(erf_small, (FLOAT_T)2.0 * (FLOAT_T)SMALL / (FLOAT_T)1.772453850905516027298167,
          FE_UNDERFLOW, 0),
+#endif
 
     TEST(exp_qnan, (FLOAT_T)NAN, 0, 0),
     TEST(exp_snan, (FLOAT_T)NAN, FE_INVALID, 0),
@@ -4922,8 +4929,11 @@ TEST_CONST struct {
     TESTF(atanh_small, (FLOAT_T)SMALL, FE_UNDERFLOW | FE_INEXACT, 0, FLAG_UFLOW_ERRNO),
     TESTF(expm1_small, (FLOAT_T)SMALL, FE_UNDERFLOW | FE_INEXACT, 0, FLAG_UFLOW_ERRNO),
     TESTF(log1p_small, (FLOAT_T)SMALL, FE_UNDERFLOW | FE_INEXACT, 0, FLAG_UFLOW_ERRNO),
+#if !defined(__tricore__) || !defined(TEST_FLOAT)
+    /* TriCore flushes float subnormal results to zero */
     TESTF(atan2_small, (FLOAT_T)2.0 * (FLOAT_T)SMALL, FE_UNDERFLOW | FE_INEXACT, 0,
           FLAG_UFLOW_ERRNO),
+#endif
     TESTF(exp_subnormal, (FLOAT_T)0.0, FE_UNDERFLOW | FE_INEXACT, 0,
           FLAG_ANY_VALUE | FLAG_UFLOW_ERRNO),
 #endif

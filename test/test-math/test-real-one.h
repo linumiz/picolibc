@@ -58,7 +58,7 @@ test_binary32(void)
     max_ulp = 0;
     printf("test %s\n", MATH_STRING(TEST_FUNC_32));
     for (i = 0; i < count(test_32_vec); i++) {
-        if (SKIP_DENORM32(test_32_vec[i].x)) {
+        if (SKIP_DENORM32(test_32_vec[i].x) || SKIP_DENORM32_RESULT(test_32_vec[i].y)) {
             printf("Skipping denorm value\n");
             continue;
         }

@@ -180,6 +180,18 @@ equalf(float x, float y)
     return x == y && signbit(x) == signbit(y);
 }
 
+#ifdef __tricore__
+/*
+ * The TriCore FPU flushes float subnormals to zero and detects tininess
+ * before rounding, so results that round up to FLT_MIN are flushed too
+ */
+#define SKIP_DENORMF(x) ((x) != 0 && fabsf(x) < FLT_MIN)
+#define SKIP_FMAF(x, y, z, r) \
+    (SKIP_DENORMF(x) || SKIP_DENORMF(y) || SKIP_DENORMF(z) || ((r) != 0 && fabsf(r) <= FLT_MIN))
+#else
+#define SKIP_FMAF(x, y, z, r) 0
+#endif
+
 static int
 test_fmaf(void)
 {
@@ -202,6 +214,8 @@ test_fmaf(void)
             float s = fmaf_vec[t].r[rounding_map[ro]].r;
             bool  s_exact = fmaf_vec[t].r[rounding_map[ro]].exact;
             bool  r_exact;
+            if (SKIP_FMAF(x, y, z, s))
+                continue;
             FLOAT_CLEAR_INEXACT;
             volatile float r = fmaf(x, y, z);
             r_exact = FLOAT_TEST_INEXACT;

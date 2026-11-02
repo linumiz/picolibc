@@ -74,6 +74,11 @@
 #define SKIP_DENORM
 #endif
 
+/* The TriCore FPU flushes float subnormals to zero, double subnormals work */
+#ifdef __tricore__
+#define SKIP_DENORM_FLOAT
+#endif
+
 #ifdef _RX_PID
 #define TEST_CONST
 #else
@@ -96,11 +101,22 @@
 #define SKIP_DENORM64(x)  (MY_ABS(x) < MIN_BINARY64)
 #define SKIP_DENORM80(x)  (MY_ABS(x) < MIN_BINARY80)
 #define SKIP_DENORM128(x) (MY_ABS(x) < MIN_BINARY128)
+#elif defined(SKIP_DENORM_FLOAT)
+#define SKIP_DENORM32(x)  ((x) != 0 && MY_ABS(x) < MIN_BINARY32)
+#define SKIP_DENORM64(x)  0
+#define SKIP_DENORM80(x)  0
+#define SKIP_DENORM128(x) 0
 #else
 #define SKIP_DENORM32(x)  0
 #define SKIP_DENORM64(x)  0
 #define SKIP_DENORM80(x)  0
 #define SKIP_DENORM128(x) 0
+#endif
+
+#ifdef SKIP_DENORM_FLOAT
+#define SKIP_DENORM32_RESULT(y) SKIP_DENORM32(y)
+#else
+#define SKIP_DENORM32_RESULT(y) 0
 #endif
 
 #define SKIP_CDENORM32(z)  (SKIP_DENORM32(creal32(z)) || SKIP_DENORM32(cimag32(z)))
