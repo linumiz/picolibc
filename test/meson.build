@@ -232,7 +232,7 @@ foreach params : targets
   # it is incompatible with the minimal crt0 when using stdout
   # (which lock-valid.c uses).
 
-  if is_variable('crt0_minimal' + target) and not posix_console and crt0_test_variant == 'semihost'
+  if is_variable('crt0_minimal' + target) and not posix_console and crt0_test_variant == 'semihost' and have_attr_ctor_dtor
     _objs_minimal = [get_variable('crt0_minimal'+ target)]
     t1 = 'constructor-skip'
 
