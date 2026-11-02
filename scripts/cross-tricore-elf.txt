@@ -15,6 +15,7 @@ endian = 'little'
 [properties]
 skip_sanity_check = true
 librt = '-lgcc'
+has_link_defsym = true
 # PFLASH bank 0 (code) and CPU0 DSPR (data); the TC397 bank 0 is 3 MiB
 default_flash_addr = '0x80000000'
 default_flash_size = '0x00300000'
