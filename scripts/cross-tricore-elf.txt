@@ -23,6 +23,9 @@ default_ram_addr   = '0x70000000'
 default_ram_size   = '0x0003c000'
 
 [built-in options]
+# GCC 11 takes the generic stdbit.h path, whose #warning fails -Werror,
+# and ignores tstring.c's pragma for -Wstringop-truncation in inlined ssp
+c_args = ['-Wno-error=cpp', '-Wno-error=stringop-truncation']
 # AURIX ld call->fcall relaxation misses renaming A12 in jeq.a/jne.a
 c_link_args = ['-Wl,--nofcallfret']
 cpp_link_args = ['-Wl,--nofcallfret']
