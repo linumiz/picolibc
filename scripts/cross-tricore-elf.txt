@@ -5,6 +5,7 @@ ar = 'tricore-elf-ar'
 as = 'tricore-elf-as'
 strip = 'tricore-elf-strip'
 nm = 'tricore-elf-nm'
+exe_wrapper = ['env', 'run-tricore']
 
 [host_machine]
 system = 'none'
