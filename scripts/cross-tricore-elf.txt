@@ -1,5 +1,5 @@
 [binaries]
-c = ['tricore-elf-gcc', '-nostdlib']
+c = ['tricore-elf-gcc', '-nostdlib', '-fno-builtin-strcmp']
 cpp = ['tricore-elf-g++', '-nostdlib']
 ar = 'tricore-elf-ar'
 as = 'tricore-elf-as'
