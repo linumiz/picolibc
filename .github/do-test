@@ -45,6 +45,12 @@ case "$TARGET" in
 
 	OPTIONS="$OPTIONS -Dsanitize-trap-on-error=true"
 	;;
+    *tricore*)
+	# Disable analyzer on tricore because GCC 11 reports false NULL
+	# dereference and leak paths in libc/search
+
+	OPTIONS="$OPTIONS -Danalyzer=false"
+	;;
 esac
 
 exec "$HERE"/do-run "$TARGET" "$@" $OPTIONS
