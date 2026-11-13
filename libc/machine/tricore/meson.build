@@ -37,4 +37,6 @@ srcs_machine = [
   'setjmp.S',
 ]
 
+subdir('machine')
+
 src_machine = files(srcs_machine)
