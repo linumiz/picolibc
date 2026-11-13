@@ -36,5 +36,8 @@ add_subdirectory(machine)
 
 picolibc_sources(
   longjmp.S
+  memcpy.S
+  memset.S
   setjmp.S
+  strlen.S
   )
